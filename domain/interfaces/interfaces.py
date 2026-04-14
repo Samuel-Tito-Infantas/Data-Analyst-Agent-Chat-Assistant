@@ -1,7 +1,16 @@
 
 from abc import ABC, abstractmethod
 from typing import List
-from entities import RetrievedContext, AgentResponse
+
+import os
+import sys
+
+# Add parent directory to path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
+
+from entities import RetrievedContext
 class LLMServicePort(ABC):
     @abstractmethod
     def generate_grounded_response(self, question: str, context: List[RetrievedContext]) -> str:
