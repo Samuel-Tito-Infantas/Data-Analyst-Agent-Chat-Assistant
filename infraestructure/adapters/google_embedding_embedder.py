@@ -3,10 +3,10 @@ from typing import List
 from langchain_core.documents import Document
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
-from domain.interfaces.interfaces import LLMServicePort
+from domain.interfaces.interfaces import TextEmbedderPort, extEmbedderPort
 from domain.entities import RetrievedContext
 
-class GoogleGeminiEmbedder(LLMServicePort):
+class GoogleGeminiEmbedder(TextEmbedderPort):
     def __init__(self):
         self.model_name= "gemini-embedding-001"
 
