@@ -1,22 +1,16 @@
+# infraestructure/adapters/google_embedding_embedder.py
 from typing import List
-
-from langchain_core.documents import Document
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from src.application.ports.output import TextEmbedderRepo # <-- Fix import
 
-from domain.interfaces.interfaces import TextEmbedderPort, extEmbedderPort
-from domain.entities import RetrievedContext
-
-class GoogleGeminiEmbedder(TextEmbedderPort):
+class GoogleGeminiEmbedder(TextEmbedderRepo): # <-- Inherit correct Port
     def __init__(self):
-        self.model_name= "gemini-embedding-001"
+        self.model_name = "models/embedding-001"
+        self.model = GoogleGenerativeAIEmbeddings(model=self.model_name)
 
-    def prepare_model_template(self):
-        self.model = GoogleGenerativeAIEmbeddings(self.model_name)
-
-    def convert_to_embedding(self, text: str) -> List[float]:
+    def embed_text(self, text: str) -> List[float]: 
         try:
-            embedding = self.model.embed_query(text)
-            return embedding
+            return self.model.embed_query(text)
         except Exception as e:
-            print(f"Erro in {self.__class__.__name__}: {e}")
+            print(f"Error in {self.__class__.__name__}: {e}")
             return []

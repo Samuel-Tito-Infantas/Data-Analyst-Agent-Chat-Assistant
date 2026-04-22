@@ -1,8 +1,8 @@
-from domain.interfaces.interfaces import LLMServicePort
-from domain.entities import RetrievedContext
+from src.application.ports.output import LLMServiceRepo
+from src.domain.entities import RetrievedContext
 from typing import List
 
-class BedrockClaudeAdapter(LLMServicePort):
+class BedrockClaudeAdapter(LLMServiceRepo):
     def __init__(self):
         pass
 
@@ -12,4 +12,3 @@ class BedrockClaudeAdapter(LLMServicePort):
         
         # Simulação de chamada de API
         return "Com base no contexto, DDD separa a regra de negócio da infraestrutura."
-    

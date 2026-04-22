@@ -4,19 +4,18 @@ from typing import List
 from domain.entities import RetrievedContext, AgentResponse, KnowledgeDocument
 
 
-class TextEmbedderRepo(ABC):
+class VectorDatabaseRepo(ABC):
     @abstractmethod
-    def embed_text(self, text: str) -> List[float]:
+    def add_text_database(self, texts:List[KnowledgeDocument]):
         pass
 
-class VectorDatabaseRepo(ABC):
     @abstractmethod
     def search_by_vector(self, query_vector: List[float], top_k: int = 3) -> List[RetrievedContext]:
         pass
 
-class InsertTextDatabaseRepo(ABC):
+class TextEmbedderRepo(ABC):
     @abstractmethod
-    def add_text_database(self, texts:List[KnowledgeDocument]):
+    def embed_text(self, text: str) -> List[float]:
         pass
 
 class LLMServiceRepo(ABC):

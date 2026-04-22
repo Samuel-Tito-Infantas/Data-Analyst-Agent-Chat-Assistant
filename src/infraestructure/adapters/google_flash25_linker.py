@@ -3,16 +3,16 @@ from typing import List
 from langchain_google_genai.chat_models import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 
-from domain.interfaces.interfaces import LLMServicePort
-from domain.entities import RetrievedContext
+from src.application.ports.output import LLMServiceRepo
+from src.domain.entities import RetrievedContext
 
-class GoogleGeminiAdapter25FlashLite(LLMServicePort):
+class GoogleGeminiAdapter25FlashLite(LLMServiceRepo):
     def __init__(self):
         self.system_prompt = """Você é um DBA. Identifique quais tabelas são relevantes para a pergunta.
             Retorne APENAS uma lista separada por vírgulas com os nomes das tabelas. Sem explicações.
             Seja conservador: inclua a tabela apenas se for estritamente necessária baseada no plano.
             """
-        self.model= "gemini-2.5-flash-lite", #"gemini-2.5-pro",
+        self.model= "gemini-2.5-flash-lite" #"gemini-2.5-pro",
         self.temperature = 0.0
         self.max_tokens = 512
 

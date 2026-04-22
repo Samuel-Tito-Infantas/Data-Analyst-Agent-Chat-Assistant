@@ -4,11 +4,11 @@ from typing import List
 from redis.commands.search.field import TextField, VectorField, TagField, NumericField
 from redis.commands.search.index_definition import IndexDefinition, IndexType
 from redis.commands.search.query import Query
-from domain.entities import KnowledgeDocument
-from domain.interfaces.interfaces import VectorDatabasePort
+from src.domain.entities import KnowledgeDocument, RetrievedContext
+from src.application.ports.output import VectorDatabaseRepo
 
 
-class RedisVectorAdapter(VectorDatabasePort):
+class RedisVectorAdapter(VectorDatabaseRepo):
     def __init__(self, connection_string: str, index_name: str, prefix_name: str):
         self.client = redis.Redis.from_url(connection_string, decode_responses=False)
         self.index_name = index_name
@@ -47,7 +47,7 @@ class RedisVectorAdapter(VectorDatabasePort):
         self.client.hset(f"{self.prefix_name}:{document.id}", mapping=mapping)
 
 
-    def search_by_vector(self, vector: List[float], subreddit: str) -> List[KnowledgeDocument]:
+    def search_by_vector(self, vector: List[float], subreddit: str) -> List[RetrievedContext]:
         """Translates Redis results back to Domain Entities."""
         vector_bytes = np.array(vector, dtype=np.float32).tobytes()
         
