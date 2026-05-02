@@ -31,7 +31,7 @@ class RedisVectorAdapter(VectorDatabaseRepo):
                 definition=IndexDefinition(prefix=[self.prefix_name], index_type=IndexType.HASH)
             )
     
-    def save(self, document: KnowledgeDocument)-> None:
+    def add_text_database(self, document: List[KnowledgeDocument])-> None:
         vector_bytes = np.array(document.vector, dtype=np.float32).tobytes()
         
         flags_str = ",".join(document.content_flags)

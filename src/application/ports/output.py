@@ -20,6 +20,6 @@ class TextEmbedderRepo(ABC):
 
 class LLMServiceRepo(ABC):
     @abstractmethod
-    def generate_grounded_response(self, question: str, context: AgentResponse) -> str:
+    def generate_grounded_response(self, question: str, context: List[RetrievedContext]) -> str:
         pass
 
