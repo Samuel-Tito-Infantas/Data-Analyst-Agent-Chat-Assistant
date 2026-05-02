@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # Elasticache
+  redis-vector-db:
+    image: redis/redis-stack-server:latest
+    container_name: elasticache_sim
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # EC2
+  genai-api:
+    build: .
+    container_name: genai_ec2_service
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis-vector-db:6379
+      - LLM_API_KEY=GOOGLE_API_KEY
+    depends_on:
+      - redis-vector-db
+    restart: unless-stopped
+
+volumes:
+  redis_data:
